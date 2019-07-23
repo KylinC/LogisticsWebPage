@@ -21,7 +21,7 @@ def not_found(error):
 @app.route('/data')
 def data():
     callback = request.args.get('callback')
-    json_data = json.dumps(get_json_data())
+    json_data = get_json_data()
     return Response('{}({})'.format(callback, json_data))
 
 @app.route('/allroute',methods=['POST','GET'])

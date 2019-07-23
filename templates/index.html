@@ -70,7 +70,7 @@
         <div class="header_nav fl">
         </div>
         <div class="header_myself fr t_height">
-            <a class="t_a" href="index.html"> More &nbsp;</a>
+            <a class="t_a" href="new1.html"> More &nbsp;</a>
         </div>
     </div>
     <!--main-->
@@ -136,37 +136,47 @@
                                         <option value=19 align="center"> 长春 </option>
                                 </select>
                         </li>
-                        <br/><br/>
+                        
+                        <br/>
+                        <br/>
                         <li>
-                                <button class="t_btn0">Param</button>
+                            <input id = 'param1' type='text' placeholder="Parameter1"> 
+                            <br/><br/>
+                            <input id = 'param2' type='text' placeholder="Parameter2"> 
+                            <br/><br/>
+                            <input id = 'param3' type='text' placeholder="Parameter3"> 
+                            <br/><br/>
+                            <input id = 'param4' type='text' placeholder="Parameter4"> 
+                        </li>
+                            
+                        <li>
+                            <button onclick="update()">Update</button>
                         </li>
                         <br/>
                         <li>
                                 <select id="value1">
-                                        <option value=20 align="center"> ALL </option>
-                                        <option value=0 align="center"> 鄂尔多斯 </option>
-                                        <option value=1 align="center"> 武汉 </option>
-                                        <option value=2 align="center"> 昆明 </option>
-                                        <option value=3 align="center"> 重庆 </option>
-                                        <option value=4 align="center"> 深圳 </option>
-                                        <option value=5 align="center"> 上海 </option>
-                                        <option value=6 align="center"> 贵阳 </option>
-                                        <option value=7 align="center"> 北京 </option>
-                                        <option value=8 align="center"> 衢州 </option>
-                                        <option value=9 align="center"> 廊坊 </option>
-                                        <option value=10 align="center"> 菏泽 </option>
-                                        <option value=11 align="center"> 攀枝花 </option>
-                                        <option value=12 align="center"> 威海 </option>
-                                        <option value=13 align="center"> 承德 </option>
-                                        <option value=14 align="center"> 厦门 </option>
-                                        <option value=15 align="center"> 张家界 </option>
-                                        <option value=16 align="center"> 宜兴 </option>
-                                        <option value=17 align="center"> 北海 </option>
-                                        <option value=18 align="center"> 西安 </option>
-                                        <option value=19 align="center"> 长春 </option>
+                                        <option value=0 align="center"> (1, 1, 1, 1) </option>
+                                        <option value=1 align="center"> (0, 1, 1, 1) </option>
+                                        <option value=2 align="center"> (0.1, 1, 1, 1) </option>
+                                        <option value=3 align="center"> (10, 1, 1, 1) </option>
+                                        <option value=4 align="center"> (100, 1, 1, 1) </option>
+                                        <option value=5 align="center"> (1, 0, 1, 1) </option>
+                                        <option value=6 align="center"> (1, 0.5, 1, 1) </option>
+                                        <option value=7 align="center"> (1, 5, 1, 1) </option>
+                                        <option value=8 align="center"> (1, 10, 1, 1) </option>
+                                        <option value=9 align="center"> (1, 20, 1, 1) </option>
+                                        <option value=10 align="center"> (1, 1, 0.7, 1) </option>
+                                        <option value=11 align="center"> (1, 1, 0.9, 1) </option>
+                                        <option value=12 align="center"> (1, 1, 1.2, 1) </option>
+                                        <option value=13 align="center"> (1, 1, 1.4, 1) </option>
+                                        <option value=14 align="center"> (1, 1, 1, 0.04) </option>
+                                        <option value=15 align="center"> (1, 1, 1, 0.08) </option>
+                                        <option value=16 align="center"> (1, 1, 1, 0.2) </option>
+                                        <option value=17 align="center"> (1, 1, 1, 0.5) </option>
                                 </select>
                         </li>
-                        <li>
+                        
+                        <!-- <li>
                                 <select id="value2">
                                         <option value=20 align="center"> ALL </option>
                                         <option value=0 align="center"> 鄂尔多斯 </option>
@@ -241,7 +251,8 @@
                                         <option value=18 align="center"> 西安 </option>
                                         <option value=19 align="center"> 长春 </option>
                                 </select>
-                        </li>
+                        </li> -->
+                        
                         <!-- <li>
                                 <table width="800" border="1" cellspacing="0">
                                         <thead>
@@ -468,7 +479,6 @@ function optionFactory(res,objS,objQ) {
     
     var series = [];
     [res].forEach(function(item, i) {
-        console.log(item)
         series.push({
                 type: 'lines',
                 zlevel: 2,
@@ -493,8 +503,6 @@ function optionFactory(res,objS,objQ) {
 
     var set1 = new Set([]);
     for(var i = 0; i < 20; i++){
-        // console.log(group);
-        // console.log(offset);
         
         var list_length=0;
         for(var keyitem in res){
@@ -506,6 +514,8 @@ function optionFactory(res,objS,objQ) {
                 set1.add(i);
             }
         }
+        
+        var node_size=[5,10,5,5,10,10,5,10,5,5,5,5,5,5,5,5,5,5,10,5,5]
         
         
         if(set1.has(i) && i!=objQ && i!=objS){
@@ -531,9 +541,7 @@ function optionFactory(res,objS,objQ) {
                     }
                 },
                 symbol: 'circle',
-                symbolSize: function() {
-                    return 5; //圆环大小
-                },
+                symbolSize: node_size[i],
                 itemStyle: {
                     normal: {
                         show: false,
@@ -571,9 +579,7 @@ function optionFactory(res,objS,objQ) {
                     }
                 },
                 symbol: 'circle',
-                symbolSize: function() {
-                    return 5; //圆环大小
-                },
+                symbolSize: node_size[i],
                 itemStyle: {
                     normal: {
                         show: false,
@@ -611,9 +617,7 @@ function optionFactory(res,objS,objQ) {
                     }
                 },
                 symbol: 'circle',
-                symbolSize: function() {
-                    return 5; //圆环大小
-                },
+                symbolSize: node_size[i],
                 itemStyle: {
                     normal: {
                         show: false,
@@ -651,9 +655,7 @@ function optionFactory(res,objS,objQ) {
                     }
                 },
                 symbol: 'circle',
-                symbolSize: function() {
-                    return 5; //圆环大小
-                },
+                symbolSize: node_size[i],
                 itemStyle: {
                     normal: {
                         show: false,
@@ -724,6 +726,15 @@ function optionFactory(res,objS,objQ) {
         };
 
         myChart.setOption(option);
+
+        myChart.on('click', function (params) {
+            console.log(params.componentIndex)
+            if (params.componentSubType === 'effectScatter') {
+                // todo...
+                console.log('go');
+                }
+            }
+        )
 }
 
 // $.ajax({
@@ -743,22 +754,19 @@ $(document).ready(function(){
     $("#origin").on('change',function(){
         var objS=document.getElementById('origin');
         objS=objS.options[objS.selectedIndex].value;
-        //console.log(typeof(objS));
         var objQ=document.getElementById('destination');
         objQ=objQ.options[objQ.selectedIndex].value;
-        //console.log(objQ);
-        // var objS='1';
-        // var objQ='0';
+        var objM=document.getElementById('value1');
+        objM=objM.options[objM.selectedIndex].value;
+        objM=parseInt(objM);
+
         var tag=objS+'-'+objQ;
-        // tag='1-0';
-        console.log(tag);
         $.ajax({
             type: 'GET',
             url:"http://127.0.0.1:5000/data",
             dataType: "jsonp",  
-            success:function(res){ //成功的话，得到消息
-                //alert(data);
-                optionFactory(res[tag],parseInt(objS),parseInt(objQ));
+            success:function(res){ 
+                optionFactory(res[objM][tag],parseInt(objS),parseInt(objQ));
             },
             error: function (msg) {
                 console.log(msg);
@@ -771,22 +779,42 @@ $(document).ready(function(){
     $("#destination").on('change',function(){
         var objS=document.getElementById('origin');
         objS=objS.options[objS.selectedIndex].value;
-        console.log(typeof(objS));
         var objQ=document.getElementById('destination');
         objQ=objQ.options[objQ.selectedIndex].value;
-        console.log(objQ);
-        // var objS='1';
-        // var objQ='0';
+        var objM=document.getElementById('value1');
+        objM=objM.options[objM.selectedIndex].value;
+        objM=parseInt(objM);
         var tag=objS+'-'+objQ;
-        // tag='1-0';
-        console.log(tag);
         $.ajax({
             type: 'GET',
             url:"http://127.0.0.1:5000/data",
             dataType: "jsonp",  
-            success:function(res){ //成功的话，得到消息
-                //alert(data);
-                optionFactory(res[tag],parseInt(objS),parseInt(objQ));
+            success:function(res){ 
+                optionFactory(res[objM][tag],parseInt(objS),parseInt(objQ));
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    });
+});
+
+$(document).ready(function(){
+    $("#value1").on('change',function(){
+        var objS=document.getElementById('origin');
+        objS=objS.options[objS.selectedIndex].value;
+        var objQ=document.getElementById('destination');
+        objQ=objQ.options[objQ.selectedIndex].value;
+        var objM=document.getElementById('value1');
+        objM=objM.options[objM.selectedIndex].value;
+        objM=parseInt(objM);
+        var tag=objS+'-'+objQ;
+        $.ajax({
+            type: 'GET',
+            url:"http://127.0.0.1:5000/data",
+            dataType: "jsonp",  
+            success:function(res){ 
+                optionFactory(res[objM][tag],parseInt(objS),parseInt(objQ));
             },
             error: function (msg) {
                 console.log(msg);
@@ -796,7 +824,36 @@ $(document).ready(function(){
 });
 
 </script>
-</body>
 
+<script>
+    function update(){
+        var param1 = $("#param1").val();
+        var param2 = $("#param2").val();
+        var param3 = $("#param3").val();
+        var param4 = $("#param4").val();
+
+        var objS=document.getElementById('origin');
+        objS=objS.options[objS.selectedIndex].value;
+        var objQ=document.getElementById('destination');
+        objQ=objQ.options[objQ.selectedIndex].value;
+        var tag=objS+'-'+objQ;
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://127.0.0.1:5000/allroute',
+            data: JSON.stringify({'param1': param1, 'param2': param2, 'param3': param3, 'param4': param4}),
+            dataType: "jsonp",
+            contentType: "application/json; charset=utf-8",
+            success: function (res) {
+                optionFactory(res[tag],parseInt(objS),parseInt(objQ));
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+</script>
+
+</body>
 
 </html>

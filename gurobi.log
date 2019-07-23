@@ -8616,3 +8616,7 @@ Found heuristic solution: objective 2.015720e+07
 Changed value of parameter CliqueCuts to 2
 Presolve removed 91 rows and 91 columns
    Prev: -1  Min: -1  Max: 2  Default: -1
+
+Gurobi 8.1.1 (mac64, Python) logging started Sat Jul 20 19:58:24 2019
+
+Academic license - for non-commercial use only

@@ -2,17 +2,16 @@
 <html lang="zh-CN">
     <head>
         <title>Data-Platform</title>
-        <link href="/static/css/style.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
         <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.js"></script>
-        <!-- <script src="/static/js/cytoscape.min.js"></script>     -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts.min.js"></script>
-        <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>	 -->
-        <!-- <script src="/static/js/cytoscape-qtip.js"></script> -->
         <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
         <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=tQKqfaA7AhIb59fwZG4n8LvGDfMADXqr"></script>
-        <script src="https://cdn.bootcss.com/echarts/3.7.1/extension/bmap.min.js"></script>
+        <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=tQKqfaA7AhIb59fwZG4n8LvGDfMADXqr"></script>
+        <script src="https://cdn.bootcss.com/echarts/3.7.1/extension/bmap.min.js"></script> -->
+        <link rel="stylesheet" href="../static/css/bootstrap.css">
+        <link rel="stylesheet" href="../static/css/base.css">
+        <link rel="stylesheet" href="../static/css/style.css">
     </head>
         
     <body>
@@ -162,7 +161,6 @@
                     dataType: "jsonp",  // 指定此次请求是jsonp形式
                     // 【如果不使用jsonp方式，上面 ↑ 就可以那样写】
                     success: function (res) {
-                        console.log(res);
                         per.push({id:003,name:'王武',job:'经理'});
                         optionFactory();
                     },
@@ -174,6 +172,9 @@
 
         <script type="text/javascript">
             function optionFactory(res,objS,objQ) {
+                if(myChart){
+                    myChart.dispose();
+                }
                 var myChart = echarts.init(document.getElementById('graph1'));
 
                 var chinaGeoCoordMap = {
@@ -231,7 +232,11 @@
 
                 var convertData = function(data) {
                     var resdata = [];
-                    for(var i = 0; i < data.length; i++) {
+                    var length=0;
+                    for(var keyitem in data){
+                        length++;
+                    }
+                    for(var i = 0; i < length; i++) {
                         var dataItem = data[i];
                         var fromCoord = chinaGeoCoordMap[dataItem[0]];
                         var toCoord = chinaGeoCoordMap[dataItem[1]];
@@ -249,7 +254,6 @@
                 
                 var series = [];
                 [res].forEach(function(item, i) {
-                    console.log(item)
                     series.push({
                             type: 'lines',
                             zlevel: 2,
@@ -277,7 +281,12 @@
                     // console.log(group);
                     // console.log(offset);
                     
-                    for(var j=0; j < res.length; j++){
+                    var list_length=0;
+                    for(var keyitem in res){
+                        list_length++;
+                    }
+
+                    for(var j=0; j < list_length; j++){
                         if(i!=objQ && i!=objS && (i==res[j][0] || i==res[j][1])){
                             set1.add(i);
                         }
@@ -475,6 +484,57 @@
                             color: '#fff'
                         }
                     },
+                    grid: {
+                        right: 15,
+                        top: 80,
+                        bottom: 30,
+                        width: '20%'
+                    },
+                    xAxis: {
+                        type: 'value',
+                        scale: true,
+                        position: 'top',
+                        splitNumber: 1,
+                        boundaryGap: false,
+                        splitLine: {
+                            show: false
+                        },
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 2,
+                            textStyle: {
+                                color: '#aaa'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        nameGap: 16,
+                        axisLine: {
+                            show: false,
+                            lineStyle: {
+                                color: '#ddd'
+                            }
+                        },
+                        axisTick: {
+                            show: false,
+                            lineStyle: {
+                                color: '#ddd'
+                            }
+                        },
+                        axisLabel: {
+                            interval: 0,
+                            textStyle: {
+                                color: '#999'
+                            }
+                        },
+                        data: yData
+                    },
                     geo: {
                         map: 'china',
                         zoom: 1.6,
@@ -500,6 +560,24 @@
                     };
 
                     myChart.setOption(option);
+
+                    var od_list=[];
+                    var clear_count=0;
+
+                    myChart.on('click', function (params) {
+                        if(params.componentSubType === 'effectScatter'){
+                            var item = params.componentIndex;
+                            var found = od_list.find(function(element) {return element == item;});
+                            if(found){
+                                var aim_index=od_list.indexOf(item);
+                                od_list.splice(aim_index,1);
+                            }
+                            else{
+                                od_list.push(params.componentIndex);
+                            }  
+                        }
+                        console.log(od_list);
+                    })
             }
 
             // $.ajax({
@@ -527,7 +605,7 @@
                     // var objQ='0';
                     var tag=objS+'-'+objQ;
                     // tag='1-0';
-                    console.log(tag);
+                    // console.log(tag);
                     $.ajax({
                         type: 'GET',
                         url:"http://127.0.0.1:5000/data",
@@ -547,15 +625,15 @@
                 $("#destination").on('change',function(){
                     var objS=document.getElementById('origin');
                     objS=objS.options[objS.selectedIndex].value;
-                    console.log(typeof(objS));
+                    // console.log(typeof(objS));
                     var objQ=document.getElementById('destination');
                     objQ=objQ.options[objQ.selectedIndex].value;
-                    console.log(objQ);
+                    // console.log(objQ);
                     // var objS='1';
                     // var objQ='0';
                     var tag=objS+'-'+objQ;
                     // tag='1-0';
-                    console.log(tag);
+                    // console.log(tag);
                     $.ajax({
                         type: 'GET',
                         url:"http://127.0.0.1:5000/data",
