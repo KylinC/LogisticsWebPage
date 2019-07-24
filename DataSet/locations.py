@@ -11,7 +11,7 @@ from DataGene.k_net_model import *
 city_num=20
 
 def get_json_data():
-    f=open('/Users/kylinchan/Documents/Spring2019-Git/LogisticsWeb/DataSet/dict4.file','rb') 
+    f=open('/Users/kylinchan/Documents/Spring2019-Git/LogisticsWeb/DataSet/dict8.file','rb') 
     data = pickle.load(f)
     keys_list = list(data.keys())
     res=[]
@@ -27,6 +27,8 @@ def get_json_data():
                 item[str(i)+'-20']+=item[str(i)+'-'+str(j)]
                 item['20-20']+=item[str(i)+'-'+str(j)]
         res.append(item)
+    res[0]['20-20'].append([5,7])
+    res[0]['20-20'].append([7,5])
     return res
 
     # return {'0-0': [], '0-1': [[0, 5], [5, 16], [16, 1]], '0-2': [], '0-3': [], '0-4': [], 
