@@ -4,7 +4,7 @@
 import sys
 from flask import Flask, render_template, request, url_for, Response
 import json
-from neo4j import GraphDatabase
+# from neo4j import GraphDatabase
 from DataSet.locations import get_json_data
 from DataSet.relationship import get_route_data
 
