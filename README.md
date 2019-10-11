@@ -20,4 +20,4 @@
 
 ## Chrome View
 
-![http://kylinhub.oss-cn-shanghai.aliyuncs.com/2019-07-20-view1.jpg](http://kylinhub.oss-cn-shanghai.aliyuncs.com/2019-07-20-view1.jpg)
+![](http://kylinhub.oss-cn-shanghai.aliyuncs.com/2019-07-20-view1.jpg)
